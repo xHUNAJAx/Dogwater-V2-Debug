@@ -91,7 +91,7 @@ local right_tab = gui.Groupbox(tab, "Game-Chat", 325, 15, 305, 400)
 local right_tab2 = gui.Groupbox(tab, "Custom Viewmodel Editor", 325, 499, 305, 100 );
 
 local enable_killsays = gui.Checkbox(left_tab, "enable.killsays", "Enable Killsay Deathsay", true)
-local killsay_mode = gui.Combobox(left_tab, "killsay.mode", "Select Killsay Mode", "Hentai", "Lewd", "Apologetic", "Edgy", "EZfrags", "AFK", "Troll1", "NotToxic")
+local killsay_mode = gui.Combobox(left_tab, "killsay.mode", "Select Killsay Mode", "Hentai", "Lewd", "Apologetic", "Edgy", "EZfrags", "AFK", "NotToxic")
 local killsay_speed = gui.Slider(left_tab, "killsay.speed", "Killsay / Deathsay Delay", 0, 0, 5)
 
 local enable_clantags = gui.Checkbox(left_tab2, "enable.clantags", "Enable Premade Clantags", false)
