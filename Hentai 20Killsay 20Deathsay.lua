@@ -2,7 +2,7 @@
 local SCRIPT_FILE_NAME = GetScriptName();
 local SCRIPT_FILE_ADDR = "https://raw.githubusercontent.com/OwlMan42069/Aimware-Luas/main/Hentai%20Killsay%20Deathsay.lua";
 local VERSION_FILE_ADDR = "https://raw.githubusercontent.com/OwlMan42069/Aimware-Luas/main/Versions/Hentai%20Killsay%20Deathsay%20Version.txt";
-local VERSION_NUMBER = "2.7";
+local VERSION_NUMBER = "2";
 local version_check_done = false;
 local update_downloaded = false;
 local update_available = false;
@@ -40,12 +40,12 @@ callbacks.Register( "Draw", "handleUpdates", function()
 		end
 		draw.SetFont(updaterfont1);
 		draw.Color(0,180,255,255 - fadeout);
-		draw.Text(7 - 650 + fadein, 7, "RetardAlert's");
+		draw.Text(7 - 650 + fadein, 7, "L1R1's");
 		draw.Color(225,225,225,255 - fadeout);
-		draw.Text(7 + draw.GetTextSize("RetardAlert's ") - 650 + fadein, 7, "Script");
+		draw.Text(7 + draw.GetTextSize("L1R1's ") - 650 + fadein, 7, "Script");
 		draw.Color(0,180,255,255 - fadeout);
-		draw.Text(7 + draw.GetTextSize("RetardAlert's Script  ") - 650 + fadein, 7, "\\");
-		spacing = draw.GetTextSize("RetardAlert's Script  \\  ");
+		draw.Text(7 + draw.GetTextSize("L1R1's Script  ") - 650 + fadein, 7, "\\");
+		spacing = draw.GetTextSize("L1R1's Script  \\  ");
 		draw.SetFont(updaterfont2);
 		draw.Color(225,225,225,255 - fadeout);
 	end
@@ -82,7 +82,7 @@ end)
 
 --------GUI Stuff--------
 local misc_ref = gui.Reference("Misc")
-local tab = gui.Tab(misc_ref, "RetardAlert", ("ThighHighs.club v" .. VERSION_NUMBER))
+local tab = gui.Tab(misc_ref, "L1R1", ("Dogwater Debug v" .. VERSION_NUMBER))
 
 local left_tab = gui.Groupbox(tab, "Killsay / Deathsay", 10, 15, 310, 400)
 local left_tab2 = gui.Groupbox(tab, "Clantags", 10, 210, 310, 400)
