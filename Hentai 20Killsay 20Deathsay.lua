@@ -91,7 +91,7 @@ local right_tab = gui.Groupbox(tab, "Game-Chat", 325, 15, 305, 400)
 local right_tab2 = gui.Groupbox(tab, "Custom Viewmodel Editor", 325, 499, 305, 100 );
 
 local enable_killsays = gui.Checkbox(left_tab, "enable.killsays", "Enable Killsay Deathsay", true)
-local killsay_mode = gui.Combobox(left_tab, "killsay.mode", "Select Killsay Mode", "Hentai", "Lewd", "Apologetic", "Edgy", "EZfrags", "AFK")
+local killsay_mode = gui.Combobox(left_tab, "killsay.mode", "Select Killsay Mode", "Hentai", "Lewd", "Apologetic", "Edgy", "EZfrags", "AFK", "Troll1", "NotToxic")
 local killsay_speed = gui.Slider(left_tab, "killsay.speed", "Killsay / Deathsay Delay", 0, 0, 5)
 
 local enable_clantags = gui.Checkbox(left_tab2, "enable.clantags", "Enable Premade Clantags", false)
@@ -102,6 +102,8 @@ local clantagset = 0
 local EngineRadar = gui.Checkbox(left_tab3, "engine.radar", "Engine Radar", true)
 local ForceCrosshair = gui.Checkbox(left_tab3, "force.crosshair", "Force Crosshair", true)
 local RecoilCrosshair = gui.Checkbox(left_tab3, "recoil.crosshair", "Recoil Crosshair", false)
+local airstuck = gui.Keybox(left_tab3, "ref_airstuck", "Airstuck Key", 0)
+local ui, f, n = {danger = {fasthop = gui.Keybox(left_tab3, "danger.fasthop", "FastHop", 0),},}, 0; ui.danger.fasthop:SetDescription("movement exploit for danger zone.");
 
 local visuals_custom_viewmodel_editor = gui.Checkbox(right_tab2, "lua_custom_viewmodel_editor", "Custom Viewmodel", 0 );
 local xO = client.GetConVar("viewmodel_offset_x"); 
@@ -225,6 +227,31 @@ local function Visuals_Viewmodel()
     end
  
  callbacks.Register("Draw", "Custom Viewmodel Editor", Visuals_Viewmodel)
+
+ --------airstuck--------
+ callbacks.Register("CreateMove", function(c)
+    local airstuck_key = airstuck:GetValue()
+    if airstuck_key == 0 then return end
+    if not input.IsButtonDown(airstuck_key) then return end
+    
+    c.command_number = 0x00000
+    c.tick_count = 0x7F7FFFFF
+end)
+
+ --------speedhack--------
+callbacks.Register("Draw", function()
+    f = (ui.danger.fasthop:GetValue() ~= nil and ui.danger.fasthop:GetValue() ~= 0 and input.IsButtonPressed(ui.danger.fasthop:GetValue())) and 0 or f;
+end);
+callbacks.Register("CreateMove", function(ucmd)
+    if ui.danger.fasthop:GetValue() ~= nil and ui.danger.fasthop:GetValue() ~= 0 and input.IsButtonDown(ui.danger.fasthop:GetValue()) and not gui.Reference("Menu"):IsActive() then
+        -- initial jump + bhop
+        ucmd.buttons = f < 2 and (f == 0 and ucmd.buttons - 4 or (f == 1 and ucmd.buttons - 2 or ucmd.buttons)) or (n and ucmd.buttons - 6 or ucmd.buttons);
+        local isTouchingGround = bit.band(entities.GetLocalPlayer():GetPropInt("m_fFlags"), 1) ~= 0;
+        -- get that speed
+        ucmd.viewangles, f, n = EulerAngles(ucmd.viewangles.x, isTouchingGround and ucmd.viewangles.y + 135 or ucmd.viewangles.y, ucmd.viewangles.z), f + 1, isTouchingGround;
+        gui.SetValue("misc.strafe.air", not isTouchingGround);
+    end;
+end);
 
 --------Inventory Unlocker--------
 local function UnlockInventory()
@@ -1056,6 +1083,14 @@ local KillSays = {
         Kill = {"I'm AFK. This is a bot. You died to a ",}, 
         Death = {"You only killed me because I'm AFK.",}
     },
+
+    NotToxic = {
+        Toxic2 = {"(?) ft. Dogwater v2 debug",},
+        Kill = {"[1v1] L1R1 vs EGOBOOSTED SKEET NEWCOMER ",
+                "L1R1 vs ",
+        },
+        Death = {"",}
+    },
 }
 
 
@@ -1093,6 +1128,14 @@ local function for_chatsay(e)
             local afk1 = say.AfkSorry[ math.random(#say.AfkSorry) ]
 
             msg = ('%s %s, %s %s.'):format(afk1, victim_name, msg, attacker_weapon)
+        end
+
+        if mode == 'NotToxic' then
+            local victim_name = client.GetPlayerNameByIndex(victim)
+
+            local tox1 = say.Toxic2[ math.random(#say.Toxic2) ]
+
+            msg = ('%s %s (bald) ft.aimware.net/dogwater v2 debug.'):format(msg, victim_name, tox1)
         end
 
         timer.Create("message_delay", killsay_speed:GetValue(), 1, function()
