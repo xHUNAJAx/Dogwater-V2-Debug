@@ -95,7 +95,7 @@ local killsay_mode = gui.Combobox(left_tab, "killsay.mode", "Select Killsay Mode
 local killsay_speed = gui.Slider(left_tab, "killsay.speed", "Killsay / Deathsay Delay", 0, 0, 5)
 
 local enable_clantags = gui.Checkbox(left_tab2, "enable.clantags", "Enable Premade Clantags", false)
-local clantag_mode = gui.Combobox(left_tab2, "clantag.mode", "Select clantag", "Sussy Baka", "UwU Rawr xD!", "Sorry Not Sorry", "No Lives Matter", "EZFrags.co.uk", "eternity.cc", "cuteware.xyz", "Yiffer.xyz", "nullcoreproject")
+local clantag_mode = gui.Combobox(left_tab2, "clantag.mode", "Select clantag", "Sussy Baka", "UwU Rawr xD!", "Sorry Not Sorry", "No Lives Matter", "EZFrags.co.uk", "eternity.cc", "cuteware.xyz", "Yiffer.xyz", "nullcoreproject", "White power", "KKK.club")
 local set_clantag = ffi.cast('int(__fastcall*)(const char*, const char*)', mem.FindPattern("engine.dll", "53 56 57 8B DA 8B F9 FF 15"))
 local clantagset = 0
 
@@ -860,6 +860,56 @@ local ClanTags = {
         "nu             	       ",
         "n            	           ",	
         "           	           ",
+    },
+
+    ['White power'] = {
+        "                          ",
+        "W                         ",
+        "Wh                        ",
+        "Whi                       ",
+        "Whit                      ",
+        "White                     ",
+        "White                     ",
+        "White P                   ",
+        "White Po                  ",
+        "White pow                 ",
+        "White powe                ",
+        "White Power               ",
+        "White Power               ",
+        "White Power               ",
+        "White Powe                ",
+        "White Pow                 ",
+        "White Po                  ",
+        "White P                   ",
+        "White                     ",
+        "White                     ",
+        "Whit                      ",
+        "Whi                       ",
+        "Wh                        ",
+        "W                         ",
+        "                          ",
+    },
+
+    ['KKK.club'] = {
+        "                          ",
+        "K                         ",
+        "KK                        ",
+        "KKK                       ",
+        "KKK.                      ",
+        "KKK.c                     ",
+        "KKK.cl                    ",
+        "KKK.clu                   ",
+        "KKK.club                  ",
+        "KKK.club                  ",
+        "KKK.club                  ",
+        "KKK.clu                   ",
+        "KKK.cl                    ",
+        "KKK.c                     ",
+        "KKK.                      ",
+        "KKK                       ",
+        "KK                        ",
+        "K                         ",
+        "                          ",
     },
 }
 
