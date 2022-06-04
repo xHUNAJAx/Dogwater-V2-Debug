@@ -88,6 +88,7 @@ local left_tab = gui.Groupbox(tab, "Killsay / Deathsay", 10, 15, 310, 400)
 local left_tab2 = gui.Groupbox(tab, "Clantags", 10, 210, 310, 400)
 local left_tab3 = gui.Groupbox(tab, "Misc", 10, 360, 310, 400)
 local right_tab = gui.Groupbox(tab, "Game-Chat", 325, 15, 305, 400)
+local right_tab2 = gui.Groupbox(tab, "Custom Viewmodel Editor", 325, 499, 305, 100 );
 
 local enable_killsays = gui.Checkbox(left_tab, "enable.killsays", "Enable Killsay Deathsay", true)
 local killsay_mode = gui.Combobox(left_tab, "killsay.mode", "Select Killsay Mode", "Hentai", "Lewd", "Apologetic", "Edgy", "EZfrags", "AFK")
@@ -101,6 +102,16 @@ local clantagset = 0
 local EngineRadar = gui.Checkbox(left_tab3, "engine.radar", "Engine Radar", true)
 local ForceCrosshair = gui.Checkbox(left_tab3, "force.crosshair", "Force Crosshair", true)
 local RecoilCrosshair = gui.Checkbox(left_tab3, "recoil.crosshair", "Recoil Crosshair", false)
+
+local visuals_custom_viewmodel_editor = gui.Checkbox(right_tab2, "lua_custom_viewmodel_editor", "Custom Viewmodel", 0 );
+local xO = client.GetConVar("viewmodel_offset_x"); 
+local yO = client.GetConVar("viewmodel_offset_y"); 
+local zO = client.GetConVar("viewmodel_offset_z");
+local fO = client.GetConVar("viewmodel_fov");  
+local xS = gui.Slider(right_tab2, "lua_x", "X", xO, -20, 20);  
+local yS = gui.Slider(right_tab2, "lua_y", "Y", yO, -100, 100);  
+local zS = gui.Slider(right_tab2, "lua_z", "Z", zO, -20, 20);  
+local vfov = gui.Slider(right_tab2, "vfov", "Viewmodel FOV", fO, 0, 120);
 
 local enable_chatcmds = gui.Checkbox(right_tab, "enable.chatcmds", "Enable Chat Commands", true)
 local chat_commands = gui.Multibox(right_tab, "Select Chat Commands")
@@ -194,6 +205,26 @@ local function CrosshairRecoil()
 		client.SetConVar("cl_crosshair_recoil", 0, true)
 	end
 end
+
+--------custom viewmodel--------
+local function Visuals_Viewmodel()
+
+    if visuals_custom_viewmodel_editor:GetValue() then 
+ client.SetConVar("viewmodel_offset_x", xS:GetValue(), true);
+ client.SetConVar("viewmodel_offset_y", yS:GetValue(), true);
+ client.SetConVar("viewmodel_offset_z", zS:GetValue(), true);
+ client.SetConVar("viewmodel_fov", vfov:GetValue(), true);
+    end
+    end
+ local function Visuals_Disable_Post_Processing()
+        if visuals_disable_post_processing:GetValue() then 
+            client.SetConVar( "mat_postprocess_enable", 0, true );
+    else
+        client.SetConVar( "mat_postprocess_enable", 1, true );
+        end
+    end
+ 
+ callbacks.Register("Draw", "Custom Viewmodel Editor", Visuals_Viewmodel)
 
 --------Inventory Unlocker--------
 local function UnlockInventory()
