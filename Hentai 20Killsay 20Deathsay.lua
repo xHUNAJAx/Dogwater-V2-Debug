@@ -1,7 +1,7 @@
 --------Auto Update-------- https://aimware.net/forum/thread/151605
 local SCRIPT_FILE_NAME = GetScriptName();
-local SCRIPT_FILE_ADDR = "https://raw.githubusercontent.com/OwlMan42069/Aimware-Luas/main/Hentai%20Killsay%20Deathsay.lua";
-local VERSION_FILE_ADDR = "https://raw.githubusercontent.com/OwlMan42069/Aimware-Luas/main/Versions/Hentai%20Killsay%20Deathsay%20Version.txt";
+local SCRIPT_FILE_ADDR = "https://raw.githubusercontent.com/xHUNAJAx/Dogwater-V2-Debug/main/Hentai%2020Killsay%2020Deathsay.lua";
+local VERSION_FILE_ADDR = "https://raw.githubusercontent.com/xHUNAJAx/Dogwater-V2-Debug/main/Hentai%2020Killsay%2020Deathsay%2020Version.txt";
 local VERSION_NUMBER = "2";
 local version_check_done = false;
 local update_downloaded = false;
