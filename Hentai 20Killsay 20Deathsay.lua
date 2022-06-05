@@ -121,6 +121,7 @@ local enable_ranks = gui.Checkbox(chat_commands, "enable.ranks", "!ranks", true)
 local enable_roll = gui.Checkbox(chat_commands, "enable.roll", "!roll", true)
 local enable_8ball = gui.Checkbox(chat_commands, "enable.8ball", "!8ball", true)
 local enable_gaydar = gui.Checkbox(chat_commands, "enable.gaydar", "!gay", true)
+local enable_blacker = gui.Checkbox(chat_commands, "enable.blacker", "!black", true)
 local enable_coin_flip = gui.Checkbox(chat_commands, "enable.flip", "!flip", true)
 local enable_anime = gui.Checkbox(chat_commands, "enable.anime", "!anime", true)
 local ranks_mode = gui.Combobox(right_tab, "ranks.mode", "Select Chat Mode (Ranks)", "Team Chat", "All Chat")
@@ -264,6 +265,7 @@ local numbers = {"1","2","3","4","5","6",}
 local responses = {"Yes - definitely.","It is decidedly so.","Without a doubt.","Reply hazy, try again.","Ask again later.","Better not tell you now.","My sources say no.","Outlook not so good.","Very doubtful.",}
 local results = {"won the coinflip!","lost the coinflip!",}
 local gaydar = {"is gay!","is not gay!",}
+local blacker = {"is black!","is not black!",}
 local anime = {
     {
         "⠄⠄⠄⢰⣧⣼⣯⠄⣸⣠⣶⣶⣦⣾⠄⠄⠄⠄⡀⠄⢀⣿⣿⠄⠄⠄⢸⡇⠄⠄",
@@ -411,6 +413,7 @@ callbacks.Register("DispatchUserMessage", function(msg)
         local response = responses[math.random(#responses)]
         local result = results[math.random(#results)]
         local thingy = gaydar[math.random(#gaydar)]
+		local blacked = blacker[math.random(#blacker)]
 		
 		if enable_msgevents:GetValue() and msgevents_mode:GetValue() == 0 then
 			if player_name ~= lp_name then
@@ -442,6 +445,13 @@ callbacks.Register("DispatchUserMessage", function(msg)
         if m(message2, "!gay") and enable_chatcmds:GetValue() and enable_gaydar:GetValue() then
             timer.Create("message_delay", 0.7, 1, function()
                 msg = ('%s %s'):format(player_name, thingy)
+                client.ChatSay(msg)
+            end)
+        end
+
+		if m(message2, "!black") and enable_chatcmds:GetValue() and enable_blacker:GetValue() then
+            timer.Create("message_delay", 0.7, 1, function()
+                msg = ('%s %s'):format(player_name, blacked)
                 client.ChatSay(msg)
             end)
         end
