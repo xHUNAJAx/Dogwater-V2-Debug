@@ -90,7 +90,7 @@ local left_tab3 = gui.Groupbox(tab, "Misc", 10, 360, 310, 400)
 local right_tab = gui.Groupbox(tab, "Game-Chat", 325, 15, 305, 400)
 local right_tab2 = gui.Groupbox(tab, "Custom Viewmodel Editor", 325, 499, 305, 100 );
 
-local enable_killsays = gui.Checkbox(left_tab, "enable.killsays", "Enable Killsay Deathsay", true)
+local enable_killsays = gui.Checkbox(left_tab, "enable.killsays", "Enable Killsay Deathsay", false)
 local killsay_mode = gui.Combobox(left_tab, "killsay.mode", "Select Killsay Mode", "Hentai", "Lewd", "Apologetic", "Edgy", "EZfrags", "AFK", "NotToxic")
 local killsay_speed = gui.Slider(left_tab, "killsay.speed", "Killsay / Deathsay Delay", 0, 0, 5)
 
@@ -99,8 +99,8 @@ local clantag_mode = gui.Combobox(left_tab2, "clantag.mode", "Select clantag", "
 local set_clantag = ffi.cast('int(__fastcall*)(const char*, const char*)', mem.FindPattern("engine.dll", "53 56 57 8B DA 8B F9 FF 15"))
 local clantagset = 0
 
-local EngineRadar = gui.Checkbox(left_tab3, "engine.radar", "Engine Radar", true)
-local ForceCrosshair = gui.Checkbox(left_tab3, "force.crosshair", "Force Crosshair", true)
+local EngineRadar = gui.Checkbox(left_tab3, "engine.radar", "Engine Radar", false)
+local ForceCrosshair = gui.Checkbox(left_tab3, "force.crosshair", "Force Crosshair", false)
 local RecoilCrosshair = gui.Checkbox(left_tab3, "recoil.crosshair", "Recoil Crosshair", false)
 local airstuck = gui.Keybox(left_tab3, "ref_airstuck", "Airstuck Key", 0)
 local ui, f, n = {danger = {fasthop = gui.Keybox(left_tab3, "danger.fasthop", "FastHop", 0),},}, 0; ui.danger.fasthop:SetDescription("movement exploit for danger zone.");
@@ -115,7 +115,7 @@ local yS = gui.Slider(right_tab2, "lua_y", "Y", yO, -100, 100);
 local zS = gui.Slider(right_tab2, "lua_z", "Z", zO, -20, 20);  
 local vfov = gui.Slider(right_tab2, "vfov", "Viewmodel FOV", fO, 0, 120);
 
-local enable_chatcmds = gui.Checkbox(right_tab, "enable.chatcmds", "Enable Chat Commands", true)
+local enable_chatcmds = gui.Checkbox(right_tab, "enable.chatcmds", "Enable Chat Commands", false)
 local chat_commands = gui.Multibox(right_tab, "Select Chat Commands")
 local enable_ranks = gui.Checkbox(chat_commands, "enable.ranks", "!ranks", true)
 local enable_roll = gui.Checkbox(chat_commands, "enable.roll", "!roll", true)
@@ -125,7 +125,7 @@ local enable_coin_flip = gui.Checkbox(chat_commands, "enable.flip", "!flip", tru
 local enable_anime = gui.Checkbox(chat_commands, "enable.anime", "!anime", true)
 local ranks_mode = gui.Combobox(right_tab, "ranks.mode", "Select Chat Mode (Ranks)", "Team Chat", "All Chat")
 
-local enable_throwsay = gui.Checkbox(right_tab, "enable.throwsay", "Enable Grenade Throwsay", true)
+local enable_throwsay = gui.Checkbox(right_tab, "enable.throwsay", "Enable Grenade Throwsay", false)
 local grenade_throwsay = gui.Multibox(right_tab, "Select Grenades")
 local enable_hegrenade = gui.Checkbox(grenade_throwsay, "enable.hegrenade", "HE Grenade", true)
 local enable_flashbang = gui.Checkbox(grenade_throwsay, "enable.flashbang", "Flashbang", true)
