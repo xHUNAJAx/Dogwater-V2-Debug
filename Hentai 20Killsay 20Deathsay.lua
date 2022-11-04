@@ -1,3 +1,5 @@
+-- Dogwater v2.1 debug.lua -- removed clantags cuz they dont support it rn -- copy the clantags back from old code when they add them back --
+
 --------Auto Update-------- https://aimware.net/forum/thread/151605
 local SCRIPT_FILE_NAME = GetScriptName();
 local SCRIPT_FILE_ADDR = "https://raw.githubusercontent.com/xHUNAJAx/Dogwater-V2-Debug/main/Hentai%2020Killsay%2020Deathsay.lua";
@@ -85,8 +87,7 @@ local misc_ref = gui.Reference("Misc")
 local tab = gui.Tab(misc_ref, "L1R1", ("Dogwater Debug v" .. VERSION_NUMBER))
 
 local left_tab = gui.Groupbox(tab, "Killsay / Deathsay", 10, 15, 310, 400)
-local left_tab2 = gui.Groupbox(tab, "Clantags", 10, 210, 310, 400)
-local left_tab3 = gui.Groupbox(tab, "Misc", 10, 360, 310, 400)
+local left_tab2 = gui.Groupbox(tab, "Misc", 10, 210, 310, 400)
 local right_tab = gui.Groupbox(tab, "Game-Chat", 325, 15, 305, 400)
 local right_tab2 = gui.Groupbox(tab, "Custom Viewmodel Editor", 325, 499, 305, 100 );
 
@@ -94,16 +95,11 @@ local enable_killsays = gui.Checkbox(left_tab, "enable.killsays", "Enable Killsa
 local killsay_mode = gui.Combobox(left_tab, "killsay.mode", "Select Killsay Mode", "Hentai", "Lewd", "Apologetic", "Edgy", "EZfrags", "AFK", "NotToxic")
 local killsay_speed = gui.Slider(left_tab, "killsay.speed", "Killsay / Deathsay Delay", 0, 0, 5)
 
-local enable_clantags = gui.Checkbox(left_tab2, "enable.clantags", "Enable Premade Clantags", false)
-local clantag_mode = gui.Combobox(left_tab2, "clantag.mode", "Select clantag", "Sussy Baka", "UwU Rawr xD!", "Sorry Not Sorry", "No Lives Matter", "EZFrags.co.uk", "eternity.cc", "cuteware.xyz", "Yiffer.xyz", "nullcoreproject", "White power", "KKK.club")
-local set_clantag = ffi.cast('int(__fastcall*)(const char*, const char*)', mem.FindPattern("engine.dll", "53 56 57 8B DA 8B F9 FF 15"))
-local clantagset = 0
-
-local EngineRadar = gui.Checkbox(left_tab3, "engine.radar", "Engine Radar", false)
-local ForceCrosshair = gui.Checkbox(left_tab3, "force.crosshair", "Force Crosshair", false)
-local RecoilCrosshair = gui.Checkbox(left_tab3, "recoil.crosshair", "Recoil Crosshair", false)
-local airstuck = gui.Keybox(left_tab3, "ref_airstuck", "Airstuck Key", 0)
-local ui, f, n = {danger = {fasthop = gui.Keybox(left_tab3, "danger.fasthop", "FastHop", 0),},}, 0; ui.danger.fasthop:SetDescription("movement exploit for danger zone.");
+local EngineRadar = gui.Checkbox(left_tab2, "engine.radar", "Engine Radar", false)
+local ForceCrosshair = gui.Checkbox(left_tab2, "force.crosshair", "Force Crosshair", false)
+local RecoilCrosshair = gui.Checkbox(left_tab2, "recoil.crosshair", "Recoil Crosshair", false)
+local airstuck = gui.Keybox(left_tab2, "ref_airstuck", "Airstuck Key", 0)
+local ui, f, n = {danger = {fasthop = gui.Keybox(left_tab2, "danger.fasthop", "FastHop", 0),},}, 0; ui.danger.fasthop:SetDescription("movement exploit for danger zone.");
 
 local visuals_custom_viewmodel_editor = gui.Checkbox(right_tab2, "lua_custom_viewmodel_editor", "Custom Viewmodel", 0 );
 local xO = client.GetConVar("viewmodel_offset_x"); 
@@ -143,6 +139,7 @@ local msgevents_speed = gui.Slider(right_tab, "msgevents.speed", "Message Events
 local function OnUnload()
 client.Command("toggleconsole", true)
 
+    client.Command('echo "            Dogwater unloaded            "', true)
 	client.Command('echo "⠄⠄⠄⢰⣧⣼⣯⠄⣸⣠⣶⣶⣦⣾⠄⠄⠄⠄⡀⠄⢀⣿⣿⠄⠄⠄⢸⡇⠄⠄"', true)
 	client.Command('echo "⠄⠄⠄⣾⣿⠿⠿⠶⠿⢿⣿⣿⣿⣿⣦⣤⣄⢀⡅⢠⣾⣛⡉⠄⠄⠄⠸⢀⣿⠄"', true)
 	client.Command('echo "⠄⠄⢀⡋⣡⣴⣶⣶⡀⠄⠄⠙⢿⣿⣿⣿⣿⣿⣴⣿⣿⣿⢃⣤⣄⣀⣥⣿⣿⠄"', true)
@@ -158,10 +155,6 @@ client.Command("toggleconsole", true)
 	client.Command('echo "⠄⠄⠄⠄⠈⠛⢿⣿⣿⣿⠁⠞⢿⣿⣿⡄⢿⣿⡇⣸⣿⣿⠿⠛⠁⠄⠄⠄⠄⠄"', true)
 	client.Command('echo "⠄⠄⠄⠄⠄⠄⠄⠉⠻⣿⣿⣾⣦⡙⠻⣷⣾⣿⠃⠿⠋⠁⠄⠄⠄⠄⠄⢀⣠⣴"', true)
 	client.Command('echo "⣿⣿⣿⣶⣶⣮⣥⣒⠲⢮⣝⡿⣿⣿⡆⣿⡿⠃⠄⠄⠄⠄⠄⠄⠄⣠⣴⣿⣿⣿"', true)
-
-	if clantagset == 1 then
-		set_clantag("", "")
-	end
 end
 
 --------Miscellaneous--------
@@ -568,385 +561,6 @@ local function for_throwsay(e)
         end)
 	end
 end
-
-
---ClanTags
-local ClanTags = {
-	['Sussy Baka'] = {
-		"                  ",
-		"S                 ",
-		"S^                ",
-		"Su                ",
-		"Su|               ",
-		"Su                ",
-		"Sus               ",
-		"Suss              ",
-		"Suss(>ω<)         ",
-		"Sussy             ",
-		"Sussy |           ",
-		"Sussy             ",
-		"Sussy B           ",
-		"Sussy B@          ",
-		"Sussy Ba          ",
-		"Sussy Ba(>ω<)     ",
-		"Sussy Bak         ",
-		"Sussy Baka        ",
-		"Sussy Baka|       ",
-		"Sussy Baka        ",
-		"Sussy Baka|       ",
-		"Sussy Baka        ",
-		"Sussy Baka|       ",
-		"Sussy Baka        ",
-		"Sussy Bak         ",
-		"Sussy Ba^         ",
-		"Sussy Ba          ",
-		"Sussy B@          ",
-		"Sussy B           ",
-		"Sussy |           ",
-		"Sussy             ",
-		"Sussy |           ",
-		"Sussy             ",
-		"Sussy|            ",
-		"Sussy             ",
-		"Suss(>ω<)         ",
-		"Suss              ",
-		"Sus|              ",
-		"Sus               ",
-		"Su                ",
-		"S^                ",
-		"S|                ",
-		"S                 ",
-		"|                 "
-	},
-
-	['UwU Rawr xD!'] = {
-		"                  ",
-		"U                 ",
-		"Uw                ",
-		"UwU               ",
-		"(>ω<)             ",
-		"UwU R             ",
-		"UwU Ra            ",
-		"UwU Raw           ",
-		"UwU Rawr          ",
-		"UwU Rawr x        ",
-		"UwU Rawr xD       ",
-		"UwU Rawr xD!      ",
-		"UwU Rawr xD!      ",
-		"UwU Rawr xD!      ",
-		"UwU Rawr xD!      ",
-		"UwU Rawr xD!      ",
-		"UwU Rawr xD       ",
-		"UwU Rawr x        ",
-		"UwU Rawr          ",
-		"UwU Raw           ",
-		"UwU Ra            ",
-		"UwU R             ",
-		"(>ω<)             ",
-		"UwU               ",
-		"Uw                ",
-		"U                 ",
-		"                  ",
-		"                  "
-	},
-
-	['Sorry Not Sorry'] = {
-		"                  ",
-		"$                 ",
-		"S                 ",
-		"So                ",
-		"Sor               ",
-		"Sorr              ",
-		"Sorry             ",
-		"Sorry N           ",
-		"Sorry No          ",
-		"Sorry No^         ",
-		"Sorry Not         ",
-		"Sorry Not $       ",
-		"Sorry Not S@      ",
-		"Sorry Not So      ",
-		"Sorry Not Sor     ",
-		"Sorry Not Sorr    ",
-		"Sorry Not Sorr^   ",
-		"Sorry Not Sorry   ",
-		"Sorry Not Sorry   ",
-		"$@rry Not $@rry   ",
-		"Sorry Not Sorry   ",
-		"Sorry Not Sorry   ",
-		"Sorry Not Sorr^   ",
-		"Sorry Not Sorr    ",
-		"Sorry Not Sor     ",
-		"Sorry Not So      ",
-		"Sorry Not S@      ",
-		"Sorry Not $       ",
-		"Sorry Not         ",
-		"Sorry No^         ",
-		"Sorry No          ",
-		"Sorry N           ",
-		"Sorry             ",
-		"Sorr              ",
-		"Sor               ",
-		"So                ",
-		"S                 ",
-		"$                 ",
-		"                  "
-	},
-
-	['No Lives Matter'] = {
-		"                  ",
-		"N                 ",
-		"No                ",
-		"No L              ",
-		"No Li             ",
-		"No Liv            ",
-		"No Live           ",
-		"No Lives          ",
-		"No Lives M        ",
-		"No Lives Ma       ",
-		"No Lives Mat      ",
-		"No Lives Matt     ",
-		"No Lives Matte    ",
-		"No Lives Matter   ",
-		"No Lives Matter   ",
-		"No Lives Matter   ",
-		"No Lives Matter   ",
-		"o Lives Matter    ",
-		"Lives Matter      ",
-		"ives Matter       ",
-		"ves Matter        ",
-		"es Matter         ",
-		"s Matter          ",
-		"Matter            ",
-		"atter             ",
-		"tter              ",
-		"ter               ",
-		"er                ",
-		"r                 ",
-		"                  "
-	},
-
-	['EZFrags.co.uk'] = {
-		"                  ",
-		"E                 ",
-		"EZ                ",
-		"EZf               ",
-		"EZfr              ",
-		"EZfra             ",
-		"EZfrag            ",
-		"EZfrags           ",
-		"EZfrags.          ",
-		"EZfrags.c         ",
-		"EZfrags.co        ",
-		"EZfrags.co.       ",
-		"EZfrags.co.u      ",
-		"EZfrags.co.uk     ",
-		"EZfrags.co.uk     ",
-		"EZfrags.co.uk     ",
-		"EZfrags.co.uk     ",
-		"EZfrags.co.uk     ",
-		"EZfrags.co.u      ",
-		"EZfrags.co.       ",
-		"EZfrags.co.       ",
-		"EZfrags.co        ",
-		"EZfrags.c         ",
-		"EZfrags.          ",
-		"EZfrags           ",
-		"EZfrag            ",
-		"EZfra             ",
-		"EZfr              ",
-		"EZf               ",
-		"EZ                ",
-		"E                 ",
-		"                  "
-	},
-
-    ['eternity.cc'] = {
-        "                  ",
-        "e                 ",
-        "et                ",
-        "ete               ",
-        "eter              ",
-        "etern             ",
-        "eterni            ",
-        "eternit           ",
-        "eternity          ",
-        "eternity.         ",
-        "eternity.c        ",
-        "eternity.cc       ",
-        "eternity.c        ",
-        "eternity.         ",
-        "eternity          ",
-        "eternit           ",
-        "eterni            ",
-        "etern             ",
-        "eter              ",
-        "ete               ",
-        "et                ",
-        "e                 ",
-        "                  ",
-    },
-
-    ['cuteware.xyz'] = {
-        "                  ",
-        "c                 ",
-        "cu                ",
-        "cut               ",
-        "cute              ",
-        "cutew             ",
-        "cutewar           ",
-        "cuteware          ",
-        "cuteware.         ",
-        "cuteware.x        ",
-        "cuteware.xy       ",
-        "cuteware.xyz      ",
-        "cuteware.xy       ",
-        "cuteware.x        ",
-        "cuteware.         ",
-        "cuteware          ",
-        "cutewar           ",
-        "cutewa            ",
-        "cutew             ",
-        "cute              ",
-        "cut               ",
-        "cu                ",
-        "c                 ",
-        "                  ",
-    },
-
-    ['Yiffer.xyz'] = {
-        "                  ",
-        "Y                 ",
-        "Yi                ",
-        "Yif               ",
-        "Yiff              ",
-        "Yiffe             ",
-        "Yiffer            ",
-        "Yiffer.           ",
-        "Yiffer.x          ",
-        "Yiffer.xy         ",
-        "Yiffer.xyz        ",
-        "Yiffer.xy         ",
-        "Yiffer.x          ",
-        "Yiffer.           ",
-        "Yiffer            ",
-        "Yiffe             ",
-        "Yiff              ",
-        "Yif               ",
-        "Yi                ",
-        "Y                 ",
-        "                  ",
-    },
-
-    ['nullcoreproject'] = {
-        "                          ",
-        "n                         ",
-        "nu                        ",
-        "nul                       ",
-        "null                      ",
-        "nullc                     ",
-        "nullco                    ",
-        "nullcor                   ",
-        "nullcore                  ",
-        "nullcorep                 ",
-        "nullcorepr                ",
-        "nullcorepro               ",
-        "nullcoreproj              ",
-        "nullcoreproje             ",
-        "nullcoreprojec            ",
-        "nullcoreproject           ",
-        "nullcoreproject           ",
-        "nullcoreprojec            ",
-        "nullcoreproje             ",
-        "nullcoreproj              ",
-        "nullcorepro               ",
-        "nullcorepr                ",
-        "nullcorep                 ",
-        "nullcore                  ",
-        "nullcor            	   ",
-        "nullco            	       ",
-        "nullc                     ",
-        "null             	       ",
-        "nul             	       ",
-        "nu             	       ",
-        "n            	           ",	
-        "           	           ",
-    },
-
-    ['White power'] = {
-        "                          ",
-        "W                         ",
-        "Wh                        ",
-        "Whi                       ",
-        "Whit                      ",
-        "White                     ",
-        "White                     ",
-        "White P                   ",
-        "White Po                  ",
-        "White Pow                 ",
-        "White Powe                ",
-        "White Power               ",
-        "White Power               ",
-        "White Power               ",
-        "White Powe                ",
-        "White Pow                 ",
-        "White Po                  ",
-        "White P                   ",
-        "White                     ",
-        "White                     ",
-        "Whit                      ",
-        "Whi                       ",
-        "Wh                        ",
-        "W                         ",
-        "                          ",
-    },
-
-    ['KKK.club'] = {
-        "                          ",
-        "K                         ",
-        "KK                        ",
-        "KKK                       ",
-        "KKK.                      ",
-        "KKK.c                     ",
-        "KKK.cl                    ",
-        "KKK.clu                   ",
-        "KKK.club                  ",
-        "KKK.club                  ",
-        "KKK.club                  ",
-        "KKK.clu                   ",
-        "KKK.cl                    ",
-        "KKK.c                     ",
-        "KKK.                      ",
-        "KKK                       ",
-        "KK                        ",
-        "K                         ",
-        "                          ",
-    },
-}
-
-
-local function for_clantags()
-	if not enable_clantags:GetValue() then
-		if clantagset == 1 then
-			set_clantag("", "")
-			clantagset = 0
-		end
-
-		return
-	end
-
-	local mode = clantag_mode:GetString()
-	local tag = ClanTags[mode]
-	local curtime = math.floor(globals.CurTime() * 2.3)
-
-	if old_time ~= curtime then
-		local t = tag[curtime % #tag+1]
-		set_clantag(t, t)
-	end
-
-	old_time = curtime
-	clantagset = 1
-end
-
 -- KillSays
 local KillSays = {
 	Hentai = {
@@ -1145,11 +759,9 @@ local KillSays = {
     },
 
     NotToxic = {
-        Toxic2 = {"(?) ft. Dogwater v2 debug",},
-        Kill = {"[1v1] L1R1 vs EGOBOOSTED SKEET NEWCOMER ",
-                "L1R1 vs ",
-        },
-        Death = {"",}
+        Toxic2 = {"(?) ft. Dogwater v2 debug","(bald) ft.aimware.net/dogwater v2 debug","24/7 hvh addict TUTKACH baited by bomb kkkkkk feat. Dogwater v2 debug","wait... who ? ft aimware (free cfg in desc)"},
+        Kill = {"[1v1] L1R1 vs EGOBOOSTED SKEET NEWCOMER ","L1R1 vs "},
+		Death = {"",}
     },
 }
 
@@ -1195,7 +807,7 @@ local function for_chatsay(e)
 
             local tox1 = say.Toxic2[ math.random(#say.Toxic2) ]
 
-            msg = ('%s %s (bald) ft.aimware.net/dogwater v2 debug.'):format(msg, victim_name, tox1)
+            msg = ('%s %s %s.'):format(msg, victim_name, tox1)
         end
 
         timer.Create("message_delay", killsay_speed:GetValue(), 1, function()
@@ -1216,7 +828,6 @@ client.AllowListener('player_death')
 client.AllowListener('grenade_thrown')
 callbacks.Register('FireGameEvent', for_chatsay)
 callbacks.Register('FireGameEvent', for_throwsay)
-callbacks.Register('Draw', for_clantags)
 callbacks.Register('CreateMove', CrosshairRecoil)
 callbacks.Register("Draw", UnlockInventory)
 callbacks.Register("Unload", OnUnload)
